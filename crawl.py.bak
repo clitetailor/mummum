@@ -1,0 +1,47 @@
+import requests
+from bs4 import BeautifulSoup
+from datetime import date, datetime
+from pymongo import MongoClient
+client = MongoClient()
+proxies = {
+   'http':'http://192.168.5.8:3128',
+   'https':'https://192.168.5.8:3128'
+}
+db = client['lunch']
+Menu = db['menu']
+Menu.drop()
+days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+for i in range(2,8):
+    r = requests.get('http://nhahangsumo.com/collections/com-vp-thu-' + str(i),proxies=proxies)
+    def dow(date):
+        dayNumber = date.weekday()
+        return days[dayNumber]
+    soup = BeautifulSoup(r.content,'lxml')
+    menus = soup.findAll("div", {"class": "ajax_block_product animated fadeIn col-xs-12 col-sm-6 col-md-4 col-lg-4 product-resize"})
+    j = 1
+    for menu in menus:
+            img =  menu.find("img")['src']
+            name = menu.find("img")['alt']
+            price = menu.findAll("span",{"class":"price"})[0].text
+            if len(price) > 4:
+                price = price[:2]
+            else:
+                price = 0
+            file_name = img[img.find('product/') + 8:]
+            res = {
+                'date': days[i - 2],
+                'path':file_name,
+                'name': name,
+                'price':price,
+                'code':str(j)
+            }
+            print res
+            Menu.insert_one(res)
+            j += 1
+            file_name = '/data/webroot/mumum.visc.com/static/com/' + file_name
+            link = 'http:' + img
+            data = requests.get(link,stream=True,proxies=proxies)
+            data.raise_for_status()
+            data.raw.decode_content = True
+            with open(file_name,'wb') as f:
+                    f.write(data.content)

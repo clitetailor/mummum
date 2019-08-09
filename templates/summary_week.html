@@ -1,0 +1,66 @@
+{% include "header.html" %}
+<div class="container">
+    <div class="row center">
+        <h1>Summary of Week</h1>
+    </div>
+    <div class="row center"><h4>Chuyển khoản vào stk: 0080102274001, chủ tài khoản Trần Viết Khánh, MB Trần Duy Hưng</h4>
+    </div>
+    <div class="row center"><h5>Loc theo <a href="/summary-of-week?pay=1&[[request.query_string]]">Da thanh toan</a>   <a href="/summary-of-week?pay=0&[[request.query_string]]">Chua thanh toan</a>  </h5></div>
+    <div class="row">
+        <table class="bordered striped highlight centered responsive-table">
+            <thead>
+            <tr>
+                <th data-field="Prev"><a href="/summary-of-week?day=[[prev_weekday]]">Prev</a></th>
+                <th data-field="Next"><a href="/summary-of-week?day=[[next_weekday]]">Next</a></th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="row">
+        {% if booked != None and booked|length > 0 %}
+            <table class="bordered striped highlight centered responsive-table">
+                <thead>
+                <tr>
+                    <th data-field="Name">Name</th>
+                    <th data-field="Must Pay">Must Pay</th>
+                    <th data-field="Da thanh toan">Da thanh toan</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for book in booked %}
+                    <tr>
+                        {% if session['username'] == 'khanhtv2' %}
+                            {% if request.args.has_key('anhtud') %}
+                                <td><a href="/pay/[[book._id]]?[[request.query_string]]">[[book.name]]</a></td>
+                            {% else %}
+                                <td><a href="/pay/[[book._id]]?[[request.query_string]]">[[book.name]]</a></td>
+                            {% endif %}
+                        {% else %}
+                            {% if session['username'] == 'khuyenn' %}
+                                <td><a href="/pay/[[book._id]]?[[request.query_string]]&anhtud=1">[[book.name]]</a>
+                                </td>
+                            {% else %}
+                                <td>[[book.name]]</td>
+                            {% endif %}
+                        {% endif %}
+                        <td>[[book.must_pay]]</td>
+                        {% if book.payed != 0 %}
+                            <td style="color:#0000A0">Da thanh toan</td>
+                        {% else %}
+                            <td style="color:#FF0000">Chua thanh toan</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td>Tổng cả tuần</td>
+                    <td>[[all]]k</td>
+                </tr>
+                </tbody>
+            </table>
+        {% else %}
+            <div>No booking!</div>
+        {% endif %}
+    </div>
+</div>
+{% include "footer.html" %}
+

@@ -1,0 +1,35 @@
+{% include "header.html" %}
+<div class="container">
+<div class="row center>">
+<hgroup>
+  <h1>Login Form</h1>
+  {% if mess %}
+    <h4>[[mess]]</h4>
+  {% endif %}
+</hgroup>
+</div>
+
+<div class="row">
+<form action="/add-menu" method="POST">
+  <div class="input-field col s12">
+    <input type="text" name="date" class="validate" required value="[[date]]"/>
+    <label>Date</label>
+  </div>
+    <div class="group input-field col s12">
+    <input type="text" name="price" class="validate" required value="35"/>
+    <label>Price</label>
+  </div>
+    <div class="group input-field col s12">
+    <input type="text" name="name" class="validate" required />
+    <label>Name</label>
+  </div>
+   <div class="group input-field col s12">
+    <input type="text" name="code" class="validate" required />
+    <label>Code</label>
+  </div>
+  <input type="submit" class="btn waves-effect waves-light" value="Login"/>
+    
+</form>
+</div>
+</div>
+{% include "footer.html" %}

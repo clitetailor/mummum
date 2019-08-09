@@ -1,0 +1,26 @@
+# -*- coding: utf-8 -*-
+
+from datetime import timedelta
+
+DEBUG = False
+
+SESSION_KEY_BITS = 128
+SESSION_COOKIE_NAME = 'JSESSIONID'
+PERMANENT_SESSION_LIFETIME = timedelta(minutes=30 * 200)
+
+
+SESSION_KEY = "_myapp_sid"
+SESSION_KEY_PREFIX = "milo"
+USE_SECRET_KEY = True
+SECRET_KEY  = "[[["*3 + ']]]'*3
+SESSION_REFRESH_EACH_REQUEST = True
+
+
+WTF_CSRF_HEADERS = ['CSRF-TOKEN']
+WTF_CSRF_TIME_LIMIT = 300
+WTF_CSRF_ENABLED = False
+WTF_CSRF_SECRET_KEY = "milo"
+TEMPLATES_START_STRING = '['*2
+TEMPLATES_END_STRING = ']'*2
+ENCODE_SECRET_KEY = "sdfjalsdkujw3%^&&***($jsdafq34325353554"
+TEMPLATES_AUTO_RELOAD = True

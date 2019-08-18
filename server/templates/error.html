@@ -1,0 +1,13 @@
+{% extends "template.jinja" %}
+
+{% block title %}Error 404 - MumMum{% endblock %}
+
+<div class="container">
+  <div class="row center">
+    <hgroup>
+      {% if error %}
+      <div>{{ error }}</div>
+      {% endif %}
+    </hgroup>
+  </div>
+</div>

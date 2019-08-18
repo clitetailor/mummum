@@ -1,0 +1,26 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[scripts]
+start = "python -m server.app"
+
+[dev-packages]
+pylint = "*"
+autopep8 = "*"
+
+[packages]
+flask = "*"
+werkzeug = "*"
+flask-script = "*"
+flask-wtf = "*"
+pymongo = "*"
+bson = "*"
+qrcode = {extras = ["pil"],version = "*"}
+bs4 = "*"
+requests = "*"
+ldap3 = "*"
+
+[requires]
+python_version = "3.7"

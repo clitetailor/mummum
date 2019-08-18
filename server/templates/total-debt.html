@@ -1,0 +1,38 @@
+{% extends "template.html" %}
+<div class="container">
+  <div class="row center">
+    <h1>Nợ tồn đọng</h1>
+  </div>
+  <div class="row center">
+    <h4>
+      Chuyển khoản vào stk: 0080102274001, chủ tài khoản Trần Viết Khánh, MB
+      Trần Duy Hưng
+    </h4>
+  </div>
+  <div class="row">
+    {% if list_no != None and list_no|length > 0 %}
+    <table class="bordered striped highlight centered responsive-table">
+      <tr>
+        <th data-field="Name">Name</th>
+        <th data-field="Must Pay">Còn nợ</th>
+        <th data-field="Tuan">Tuần</th>
+      </tr>
+      {% for no in list_no %}
+      <tr>
+        {% if session['username'] == 'khanhtv2' or session['username'] ==
+        'khuyenn' %}
+        <td><a href="/pay/[[no._id]]">[[no.name]]</a></td>
+        {% else %}
+        <td>[[no.name]]</td>
+        {% endif %}
+        <td>[[no.must_pay]]</td>
+        <td><a href="/summary-of-week?day=[[no.start]]">[[no.week]]</a></td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    {% else %}
+    <div>No data!</div>
+    {% endif %}
+  </div>
+</div>

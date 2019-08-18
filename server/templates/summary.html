@@ -1,0 +1,126 @@
+{% extends "template.html" %}
+<!--  -->
+{% block title %}Summary - Mummum{% endblock %}
+<!--  -->
+{% block body %}
+<div class="container">
+  <div class="row center">
+    <h1>Summary</h1>
+  </div>
+  <div class="row center">
+    <h4 style="color:#FF69B4">
+      <marquee scrollamount="18"
+        >Người may mắn được đi lấy cơm: [[lucky_guy]]</marquee
+      >
+    </h4>
+  </div>
+  <div class="row">
+    <table class="bordered striped highlight centered responsive-table">
+      <thead>
+        <tr>
+          <th data-field="Prev">
+            <a href="/view-summary?day=[[prev]]">Prev</a>
+          </th>
+          <th data-field="Next">
+            <a href="/view-summary?day=[[nextt]]">Next</a>
+          </th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+  <div class="row">
+    {% if booked != None and booked|length > 0 %}
+    <table class="bordered striped highlight centered responsive-table">
+      <thead>
+        <tr>
+          <th data-field="ID">ID</th>
+          <th data-field="Time">Time</th>
+          <th data-field="Name">Name</th>
+          <th data-field="Item">Item</th>
+          <th data-field="Price">Price</th>
+          <th data-field="Amount">So luong</th>
+          <th data-field="Must Pay">Must Pay</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for book in booked %}
+        <tr>
+          {% if session['ip'] == '192.168.10.1488' or session['ip'] ==
+          '127.0.0.1' or session['username'] == book.name %}
+          <td>
+            <a
+              href="/del/[[book._id]]"
+              onclick="return confirm('Are you sure to Delete?')"
+              >[[book._id]]</a
+            >
+          </td>
+          {% else %}
+          <td>[[book._id]]</td>
+          {% endif %}
+          <td>[[book.time]]</td>
+          <td>[[book.name]]</td>
+          <td>[[book.item]]</td>
+          <td>[[book.price]]</td>
+          <td>[[book.amount]]</td>
+          <td>
+            [[ book.price * book.amount]]
+          </td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <td>Tổng all</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>[[all_sumo + all_nieu]]k [[sum_sumo + sum_nieu]] suất</td>
+        </tr>
+        <tr>
+          <td>Tổng sumo</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>[[all_sumo]]k [[sum_sumo]] suất</td>
+        </tr>
+        {% for tm in menu_sumo %}
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>[[ tm.name ]]</td>
+          <td>[[ tm.num ]] suất</td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <td>Tổng Comnhanh</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>[[all_nieu]]k [[sum_nieu]] suất</td>
+        </tr>
+        {% for tm in menu_nieu %}
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>[[ tm.name ]]</td>
+          <td>[[ tm.num ]] suất</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div>No booking!</div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

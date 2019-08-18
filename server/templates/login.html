@@ -1,0 +1,30 @@
+{% extends "template.html" %}
+<!-- -->
+{% block title %}Login - MumMum{% endblock}
+<!--  -->
+{% block body %}
+<div class="container">
+  <div class="row center>">
+    <hgroup>
+      <h1>Đăng nhập</h1>
+      {% if msg %}
+      <h4>[[msg]]</h4>
+      {% endif %}
+    </hgroup>
+  </div>
+
+  <div class="row">
+    <form action="/login" method="POST">
+      <div class="input-field col s12">
+        <input type="text" name="username" class="validate" required />
+        <label>Username</label>
+      </div>
+      <div class="group input-field col s12">
+        <input type="password" name="password" class="validate" required />
+        <label>Password</label>
+      </div>
+      <input type="submit" class="btn waves-effect waves-light" value="Login" />
+    </form>
+  </div>
+</div>
+{% endblock %}

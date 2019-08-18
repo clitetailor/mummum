@@ -1,0 +1,40 @@
+{% include "header.html" %}
+<div class="container">
+  <div class="row center>">
+    <hgroup>
+      <h1>Login Form</h1>
+      {% if msg %}
+      <h4>[[msg]]</h4>
+      {% endif %}
+    </hgroup>
+  </div>
+
+  <div class="row">
+    <form action="/menu" method="POST">
+      <div class="input-field col s12">
+        <label for="date">Date</label>
+        <input
+          type="text"
+          name="date"
+          class="validate"
+          required
+          value="[[date]]"
+        />
+      </div>
+      <div class="group input-field col s12">
+        <label for="price">Price</label>
+        <input type="text" name="price" class="validate" required value="35" />
+      </div>
+      <div class="group input-field col s12">
+        <label for="username">Name</label>
+        <input type="text" name="username" class="validate" required />
+      </div>
+      <div class="group input-field col s12">
+        <label for="code">Code</label>
+        <input type="text" name="code" class="validate" required />
+      </div>
+      <input type="submit" class="btn waves-effect waves-light" value="Login" />
+    </form>
+  </div>
+</div>
+{% include "footer.html" %}

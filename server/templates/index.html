@@ -1,0 +1,84 @@
+{% extends "template.html" }
+<!--  -->
+{% block title %}Home - MumMum{% endblock %}
+<!--  -->
+{% block body %}
+<script>
+    var notPayed = false;
+
+    {% if not payed %}
+    notPayed = true;
+    {% endif %}
+</script>
+
+<script type="text/javascript">
+    function clicked(id) {
+        {% if not payed %}
+            alert("Thanh niên nhớ thanh toán hết nợ các tuần trước đi :< ");
+        {% endif %}
+        var val = prompt("Số lượng", "1");
+        if (val === undefined || val == null || val.length <= 0)
+            return false;
+        var num = document.getElementById("num");
+        num.value = val;
+        var code = document.getElementById("code");
+        code.value = id;
+        var name = document.getElementById("name");
+        name.value = '';
+        {% if request.args.has_key('backdoor') %}
+            var v = prompt("Name", "");
+            if (v === undefined || v == null || v.length <= 0)
+                return false;
+            name.value = v;
+        {% endif %}
+        document.getElementById("book").submit();
+    }
+</script>
+<style>
+    .item-pic {
+        height: 200px !important;
+        width: 250px !important;
+    }
+</style>
+[[ msg ]]
+<div class="container">
+    <center><h4>Cơm nhà hàng sumo</h4></center>
+    <br>
+    {% for img in img_lst %}
+        {% if "Sumo" in img.name %}
+            <div class="card horizontal">
+                <div class="card-image waves-effect waves-block waves-light">
+                    <img class="item-pic" src="/static/com/[[img.path]]">
+                </div>
+                <div class="card-content">
+                    <span class="card-title activator grey-text text-darken-4"> [[img.name]] Giá [[img.price]]000đ </span><br>
+                    <button id="[[img.code]]" onclick="clicked(this.id);">Đặt</button>
+                </div>
+                </form>
+            </div>
+        {% endif %}
+    {% endfor %}
+    <center><h4>Cơm nhà hàng cơm nhanh</h4></center>
+    <br>
+    {% for img in img_lst %}
+        {% if "Sumo" not in img.name %}
+            <div class="card horizontal">
+                <div class="card-image waves-effect waves-block waves-light">
+                    <img class="item-pic" src="/static/com/[[img.path]]">
+                </div>
+                <div class="card-content">
+                    <span class="card-title activator grey-text text-darken-4"> [[img.name]] Giá [[img.price]]000đ </span><br>
+                    <button id="[[img.code]]" onclick="clicked(this.id);">Đặt</button>
+                </div>
+                </form>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+    <form action="/book?[[request.args.keys()[0]]]" method="POST" id="book" name="book">
+        <input type="hidden" name="code" id="code">
+        <input type="hidden" name="num" id="num">
+        <input type="hidden" name="name" id="name">
+    </form>
+</div>
+{% endblock %}

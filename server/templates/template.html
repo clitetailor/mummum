@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>{% block title %}MumMum{% endblock %}</title>
+
+    <link href="/static/css/font.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/css/materialize.min.css" />
+    <script
+      type="text/javascript"
+      src="/static/js/jquery-2.1.1.min.js"
+    ></script>
+    <script src="/static/js/materialize.min.js"></script>
+
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    <ul id="lunch" class="dropdown-content">
+      <li><a href="/summary">Tổng hợp</a></li>
+      <li><a href="/summary-of-week">Tổng hợp tuần</a></li>
+      <li><a href="/total-debt">Tổng hợp nợ</a></li>
+      <li><a href="/payment">Thanh toán</a></li>
+    </ul>
+
+    <ul id="profile" class="dropdown-content">
+      <li><a href="/logout">Đăng xuất</a></li>
+    </ul>
+
+    <nav class="#64b5f6 blue lighten-2">
+      <div class="nav-wrapper">
+        <a href="/" class="brand-logo">Lunch</a>
+        <ul class="right hide-on-med-and-down">
+          {% if session['username'] %}
+          <li>
+            <a class="dropdown-button" href="#!" data-activates="lunch"
+              >Lunch<i class="material-icons right"></i
+            ></a>
+          </li>
+          <li>
+            <a class="dropdown-button" href="#!" data-activates="profile"
+              >Hi, [[session.username]]<i class="material-icons right"></i
+            ></a>
+          </li>
+          {% else %}
+          <li><a href="/">Login</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+
+    {% block body %}{% endblock %}
+  </body>
+</html>
